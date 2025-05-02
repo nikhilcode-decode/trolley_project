@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checklist Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Checklist Dashboard</h2>
+
+    <!-- Filter Form -->
+    <form method="GET" class="mb-3">
+        <label for="status">Filter by Status</label>
+        <select name="status" id="status" class="form-select">
+            <option value="">All</option>
+            <option value="OK" {% if request.GET.status == 'OK' %}selected{% endif %}>OK</option>
+            <option value="NG" {% if request.GET.status == 'NG' %}selected{% endif %}>Not OK</option>
+        </select>
+        <button type="submit" class="btn btn-primary mt-2">Filter</button>
+    </form>
+
+    <!-- Checklist Table -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Trolley No</th>
+                <th>Inspector Name</th>
+                <th>Status</th>
+                <th>Date Checked</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for checklist in checklists %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ checklist.trolley_no }}</td>
+                    <td>{{ checklist.inspector_name }}</td>
+                    <td>{{ checklist.status }}</td>
+                    <td>{{ checklist.date_checked }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No submissions found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
